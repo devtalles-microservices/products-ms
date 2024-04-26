@@ -1,8 +1,8 @@
 import { Controller, ParseIntPipe } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { PaginationDto } from 'src/common/dtos';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { CreateProductDto } from './dtos/create-product.dto';
+import { UpdateProductDto } from './dtos/update-product.dto';
 import { ProductsService } from './products.service';
 
 @Controller('products')
@@ -25,12 +25,15 @@ export class ProductsController {
   }
 
   @MessagePattern({ cmd: 'update_product' })
-  update(
+  async update(
     // @Param('id', ParseIntPipe) id: number,
     // @Body() updateProductDto: UpdateProductDto,
     @Payload() updateProductDto: UpdateProductDto,
   ) {
-    return this.productsService.update(updateProductDto.id, updateProductDto);
+    return await this.productsService.update(
+      updateProductDto.id,
+      updateProductDto,
+    );
   }
 
   @MessagePattern({ cmd: 'delete_product' })
