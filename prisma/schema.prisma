@@ -14,8 +14,8 @@ datasource db {
 }
 
 model Product {
-  id Int @id @default(autoincrement())
-  name String
+  id    Int    @id @default(autoincrement())
+  name  String
   price Float
 
   available Boolean @default(true)
@@ -24,5 +24,4 @@ model Product {
   updatedAt DateTime @updatedAt
 
   @@index([available])
-
 }
